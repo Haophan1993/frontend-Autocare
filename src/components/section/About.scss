@@ -1,0 +1,31 @@
+.about-section{
+    //border: solid red 1px;
+    margin-top: 10px;
+    height: 400px;
+    .about-section-header{
+        //border: solid black 1px;
+        margin-bottom: 5px;
+    }
+    .about-section-content{
+        //border: solid black 1px;
+        display: flex;
+        flex-direction: row;
+        height: 300px;
+        
+
+        .left-content{
+            //border: solid black 1px;
+            flex: 1;
+            padding: 0;
+            margin-right: 8px;
+
+
+        }
+        .right-content{
+            //border: solid black 1px;
+            flex: 1;
+
+
+        }
+    }
+}

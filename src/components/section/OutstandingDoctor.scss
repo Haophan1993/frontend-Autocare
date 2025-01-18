@@ -1,0 +1,120 @@
+.outstanding-doctor-section{
+    //background-color: lightgreen;
+    height: 520px;
+    padding: 30px 5px 5px 5px;
+    position: relative;
+    margin-top: 10px;
+    .find-doctor-button-container{
+        padding: 0;
+        margin: 0;
+        
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        top:0;
+        right:0;
+        
+        .find-doctor-button{
+            height: 40px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: large;
+        }
+        .find-doctor-button:hover{
+            background-color: antiquewhite;
+        }
+
+        
+    }
+    .text-outstanding-doctor{
+        font-size: large;
+        
+        
+    }
+
+    .outstanding-doctor-section-container{
+        //background-color: lightcoral;
+        margin: 0;
+        padding: 0 ;
+        
+        .slick-arrow{
+            background-color: black;
+            width: 50px;
+            height: 50px;
+            
+            z-index: 100;
+            .slick-prev{
+                left: 6px !important;
+            }
+            .slick-next{
+                right: 6px !important;
+            }
+            
+        }
+
+        .slick-list{
+            padding-top: 5px !important;
+            padding-bottom: 5px !important;
+            height: 400px !important;
+            
+            .slick-track{
+                padding: 0 !important;
+                margin: 0 !important;
+                
+                //background-color: lightseagreen !important;
+                .doctor-img-customize{
+            
+            
+                    padding: 0 !important;
+                    height:400px;
+                    display: flex !important;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-items: center;
+                    //border: solid red 1px;
+                    
+                   //background-color: purple;
+                    .doctor-img-container{
+                        // height: inherit;
+                        // width: inherit;
+                        padding: 0;
+                        margin: 0;
+                        
+                        //background-color: aqua;
+                        
+                        
+                        .doctor-img{
+                            width: 200px;
+                            border-radius: 100px;
+                            
+                        }
+                    }
+                    
+                    .doctor-name{
+                        margin-top: 15px;
+
+                    }
+                    
+                    
+                }
+                .slick-slide{
+                    padding: 0 !important;
+                    .slick-active{
+                        padding: 0 !important;
+                    }
+                }
+                
+               
+            }
+            
+            
+        }
+        
+        
+
+        
+        
+    
+    }
+
+}
