@@ -32,6 +32,15 @@ export const userApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+
+    getAlluser: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/get-all-user`,
+        method: 'GET',
+        body: data,
+      }),
+    }),
+
   }),
 });
 
@@ -40,4 +49,5 @@ export const {
   useLogoutMutation,
   useRegisterMutation,
   useUpdateUserMutation,
+  useGetAlluserMutation,
 } = userApiSlice;

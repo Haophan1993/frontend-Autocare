@@ -10,7 +10,8 @@ import { setCredentials } from '../slices/authSlice';
 
 
 const RegisterScreen = () => {
-    const [name, setName] = useState('');
+    const [firstName, setfirstName] = useState('');
+    const [lastName, setlastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -33,7 +34,7 @@ const RegisterScreen = () => {
             toast.error('Passwords do not match');
           } else {
             try {
-              const res = await register({ name, email, password }).unwrap();
+              const res = await register({ firstName, lastName, email, password }).unwrap();
               dispatch(setCredentials({ ...res }));
               navigate('/');
             } catch (err) {
@@ -49,13 +50,22 @@ const RegisterScreen = () => {
         <FormContainer>
             <h1>Sign Up</h1>
             <Form onSubmit={submitHandler}>
-                <Form.Group className='my-2' controlId='name'>
-                    <Form.Label>Name</Form.Label>
+                <Form.Group className='my-2' controlId='firstname'>
+                    <Form.Label>First Name</Form.Label>
                     <Form.Control
                         type='text'
                         placeholder='Enter name'
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={firstName}
+                        onChange={(e) => setfirstName(e.target.value)}
+                    ></Form.Control>
+                </Form.Group>
+                <Form.Group className='my-2' controlId='lastname'>
+                    <Form.Label>Last Name</Form.Label>
+                    <Form.Control
+                        type='text'
+                        placeholder='Enter name'
+                        value={lastName}
+                        onChange={(e) => setlastName(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
 

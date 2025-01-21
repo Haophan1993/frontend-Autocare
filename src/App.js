@@ -14,6 +14,9 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PrivateRoute from './components/PrivateRoute.js';
 import HomePage from './screens/HomePage/HomePage';
+import UserManageScreen from './screens/system/UserManageScreen';
+
+
 
 
 function App() {
@@ -22,17 +25,20 @@ function App() {
 
       <div className="App">
         <BrowserRouter>
-          <Header />
+          {/* <Header /> */}
           <ToastContainer />
           <Routes>
 
             <Route index={true} path="/" element={<HomeScreen />} />
             <Route path="/login" element={<LoginScreen />} />
             <Route path="/register" element={<RegisterScreen />} />
-            <Route path="/home" element={<HomePage />} />
+            <Route path="/user-manage" element={<UserManageScreen />} />
+            
+            
 
             <Route path='' element={<PrivateRoute />}>
               <Route path='/profile' element={<ProfileScreen />} />
+              <Route path="/home" element={<HomePage />} />
             </Route>
 
 
