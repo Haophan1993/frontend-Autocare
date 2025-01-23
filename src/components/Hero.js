@@ -1,6 +1,6 @@
 import { Container, Card, Button } from 'react-bootstrap';
 
-import { Link, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 
 const Hero = () => {
     const navigate = useNavigate();
