@@ -71,7 +71,7 @@ const ModalUser=({modalOpen, parentToggle, handleReRenderPage})=> {
         <ModalBody>
           <div className='container'>
           <FormContainer>
-            <h1>Sign Up</h1>
+            
             <Form>
                 <Form.Group className='my-2' controlId='firstname'>
                     <Form.Label>First Name</Form.Label>

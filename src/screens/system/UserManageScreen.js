@@ -2,32 +2,39 @@ import './UserManageScreen.scss';
 import { useGetAlluserMutation } from '../../slices/usersApiSlice';
 import { useState, useEffect } from 'react';
 import plusIcon from './images/plus-solid.svg';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useLogoutMutation } from '../../slices/usersApiSlice';
-import {  useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { logout } from '../../slices/authSlice';
 import ModalUser from './ModalUser';
+import ModalEditUser from './ModalEditUser';
+
+import { useDeleteUserMutation } from '../../slices/usersApiSlice';
 
 const UserManageScreen = () => {
     const [getAlluser] = useGetAlluserMutation();
     const [userList, setUserList] = useState([]);
     const [openModal, setOpenModal] = useState(false);
+    const [EditModal, setEditModal] = useState(false);
     const [userIsCreated, setUserIsCreated] = useState(false);
+    const [editUser, setEditUser] = useState('')
     const navigate = useNavigate();
 
 
     const dispatch = useDispatch();
     const [logoutApiCall] = useLogoutMutation();
 
+    const [deleteApiCall] = useDeleteUserMutation();
+
     const logoutHandler = async () => {
         try {
-          await logoutApiCall().unwrap();
-          dispatch(logout());
-          navigate('/');
+            await logoutApiCall().unwrap();
+            dispatch(logout());
+            navigate('/');
         } catch (err) {
-          console.error(err);
+            console.error(err);
         }
-      };
+    };
 
     const getData = async () => {
         try {
@@ -46,6 +53,17 @@ const UserManageScreen = () => {
 
     };
 
+    const handleDelete = async (id) => {
+        try {
+            const res = await deleteApiCall({ id }).unwrap();
+            setUserIsCreated(!userIsCreated);
+
+
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
 
     useEffect(() => {
 
@@ -56,14 +74,26 @@ const UserManageScreen = () => {
         getData();
     }, [userIsCreated])
 
-    const handleAddnewUser = ()=>{
+    const handleAddnewUser = () => {
         setOpenModal(true);
     }
 
     const parentToggle = () => setOpenModal(!openModal);
 
-    const handleReRenderPage=()=>setUserIsCreated(!userIsCreated); 
-    
+    const handleReRenderPage = () => setUserIsCreated(!userIsCreated);
+
+    const parentToggleEditModal = () => {
+        setEditModal(!EditModal);
+        setEditUser('');
+    };
+
+    const handleEditUser = (user) => {
+
+        console.log('user in manage page ', user);
+        setEditUser(user);
+        setEditModal(true)
+
+    }
 
 
 
@@ -73,7 +103,7 @@ const UserManageScreen = () => {
         <div className="users-container">
             <div className="title text-center">Manage user</div>
             <div className='mx-1'>
-                <button className='btn btn-primary px-3 mb-2'onClick={handleAddnewUser}><img className='plus-icon' src={plusIcon}></img>Add new user</button>
+                <button className='btn btn-primary px-3 mb-2' onClick={handleAddnewUser}><img className='plus-icon' src={plusIcon}></img>Add new user</button>
             </div>
             <div>
                 <table id="customers">
@@ -90,13 +120,13 @@ const UserManageScreen = () => {
 
                             return (
                                 <>
-                                    <tr key={index._id}>
+                                    <tr key={index}>
                                         <td>{item.firstName}</td>
                                         <td>{item.lastName}</td>
                                         <td>{item.email}</td>
                                         <td>{item.address}</td>
-                                        <td><button>Edit</button>
-                                            <button>Edit</button>
+                                        <td><button className='btn btn-primary px-3 mx-3' onClick={() => handleEditUser(item)}>Edit</button>
+                                            <button className='btn btn-primary px-3' onClick={() => handleDelete(item._id)}>Delete</button>
                                         </td>
                                     </tr>
                                 </>
@@ -109,7 +139,13 @@ const UserManageScreen = () => {
 
                 </table>
             </div>
-        <ModalUser modalOpen={openModal} parentToggle={parentToggle} handleReRenderPage={handleReRenderPage}/>
+            <>{openModal && <ModalUser modalOpen={openModal} parentToggle={parentToggle} handleReRenderPage={handleReRenderPage} />
+            }           </>
+
+            <>
+                {EditModal &&
+                    <ModalEditUser EditModal={EditModal} parentToggle={parentToggleEditModal} editUser={editUser} handleReRenderPage={handleReRenderPage} />
+                }</>
         </div>
     )
 }
