@@ -6,7 +6,7 @@ import { Routes, Route } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
 
 import HomeScreen from './screens/HomeScreen';
-import Header from './components/Header';
+//import Header from './components/Header';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ProfileScreen from './screens/ProfileScreen';
@@ -15,6 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import PrivateRoute from './components/PrivateRoute.js';
 import HomePage from './screens/HomePage/HomePage';
 import UserManageScreen from './screens/system/UserManageScreen';
+import UserManageRedux from './screens/system/admin/UserManageRedux';
 
 
 
@@ -32,7 +33,8 @@ function App() {
             <Route index={true} path="/" element={<HomeScreen />} />
             <Route path="/login" element={<LoginScreen />} />
             <Route path="/register" element={<RegisterScreen />} />
-            <Route path="/user-manage" element={<UserManageScreen />} />
+            <Route path="/system/user-manage" element={<UserManageScreen />} />
+            <Route path="/system/user-redux" element={<UserManageRedux />} />
             
             
 

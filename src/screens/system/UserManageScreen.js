@@ -10,6 +10,7 @@ import ModalUser from './ModalUser';
 import ModalEditUser from './ModalEditUser';
 
 import { useDeleteUserMutation } from '../../slices/usersApiSlice';
+import Header from '../../components/Header';
 
 const UserManageScreen = () => {
     const [getAlluser] = useGetAlluserMutation();
@@ -98,55 +99,58 @@ const UserManageScreen = () => {
 
 
     return (
+        <>
+            <Header />
+
+            <div className="users-container">
+                <div className="title text-center"><h1>Manage user</h1></div>
+                <div className='mx-1'>
+                    <button className='btn btn-primary px-3 mb-2' onClick={handleAddnewUser}><img className='plus-icon' src={plusIcon}></img>Add new user</button>
+                </div>
+                <div>
+                    <table id="customers">
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Address</th>
+                            <th>Action</th>
+                        </tr>
+
+                        {
+                            userList.map((item, index) => {
+
+                                return (
+                                    <>
+                                        <tr key={index}>
+                                            <td>{item.firstName}</td>
+                                            <td>{item.lastName}</td>
+                                            <td>{item.email}</td>
+                                            <td>{item.address}</td>
+                                            <td><button className='btn btn-primary px-3 mx-3' onClick={() => handleEditUser(item)}>Edit</button>
+                                                <button className='btn btn-primary px-3' onClick={() => handleDelete(item._id)}>Delete</button>
+                                            </td>
+                                        </tr>
+                                    </>
+                                )
+                            })
+                        }
 
 
-        <div className="users-container">
-            <div className="title text-center">Manage user</div>
-            <div className='mx-1'>
-                <button className='btn btn-primary px-3 mb-2' onClick={handleAddnewUser}><img className='plus-icon' src={plusIcon}></img>Add new user</button>
+
+
+                    </table>
+                </div>
+                <>{openModal && <ModalUser modalOpen={openModal} parentToggle={parentToggle} handleReRenderPage={handleReRenderPage} />
+                }           </>
+
+                <>
+                    {EditModal &&
+                        <ModalEditUser EditModal={EditModal} parentToggle={parentToggleEditModal} editUser={editUser} handleReRenderPage={handleReRenderPage} />
+                    }</>
             </div>
-            <div>
-                <table id="customers">
-                    <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Email</th>
-                        <th>Address</th>
-                        <th>Action</th>
-                    </tr>
+        </>
 
-                    {
-                        userList.map((item, index) => {
-
-                            return (
-                                <>
-                                    <tr key={index}>
-                                        <td>{item.firstName}</td>
-                                        <td>{item.lastName}</td>
-                                        <td>{item.email}</td>
-                                        <td>{item.address}</td>
-                                        <td><button className='btn btn-primary px-3 mx-3' onClick={() => handleEditUser(item)}>Edit</button>
-                                            <button className='btn btn-primary px-3' onClick={() => handleDelete(item._id)}>Delete</button>
-                                        </td>
-                                    </tr>
-                                </>
-                            )
-                        })
-                    }
-
-
-
-
-                </table>
-            </div>
-            <>{openModal && <ModalUser modalOpen={openModal} parentToggle={parentToggle} handleReRenderPage={handleReRenderPage} />
-            }           </>
-
-            <>
-                {EditModal &&
-                    <ModalEditUser EditModal={EditModal} parentToggle={parentToggleEditModal} editUser={editUser} handleReRenderPage={handleReRenderPage} />
-                }</>
-        </div>
     )
 }
 

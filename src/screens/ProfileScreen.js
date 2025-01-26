@@ -11,7 +11,7 @@ import { setCredentials } from '../slices/authSlice';
 
 const ProfileScreen = () => {
   const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
+  const [firstName, setFirstName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -22,9 +22,9 @@ const ProfileScreen = () => {
   const [updateProfile] = useUpdateUserMutation();
 
   useEffect(() => {
-    setName(userInfo.name);
+    setFirstName(userInfo.firstName);
     setEmail(userInfo.email);
-  }, [userInfo.email, userInfo.name]);
+  }, [userInfo.email, userInfo.firstName]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -35,7 +35,7 @@ const ProfileScreen = () => {
       try {
         const res = await updateProfile({
           _id: userInfo._id,
-          name,
+          firstName,
           email,
           password,
         }).unwrap();
@@ -53,12 +53,12 @@ const ProfileScreen = () => {
 
       <Form onSubmit={submitHandler}>
         <Form.Group className='my-2' controlId='name'>
-          <Form.Label>Name</Form.Label>
+          <Form.Label>First Name</Form.Label>
           <Form.Control
             type='name'
             placeholder='Enter name'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
           ></Form.Control>
         </Form.Group>
         <Form.Group className='my-2' controlId='email'>

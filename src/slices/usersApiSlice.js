@@ -57,6 +57,14 @@ export const userApiSlice = apiSlice.injectEndpoints({
       }),
     }),
 
+    getAllCodes: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/allcodes`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
+
   }),
 });
 
@@ -68,4 +76,5 @@ export const {
   useGetAlluserMutation,
   useDeleteUserMutation,
   useEditUserMutation,
+  useGetAllCodesMutation,
 } = userApiSlice;

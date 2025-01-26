@@ -3,11 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 const languageSlice = createSlice({
   name: 'language',
   initialState: {
-    currentLanguage: 'vn',
+    
+    currentLanguage: localStorage.getItem('language')|| 'vn',
   },
   reducers: {
     setLanguage: (state, action) => {
       state.currentLanguage = action.payload;
+      localStorage.setItem('language', action.payload);
     },
   },
 });
