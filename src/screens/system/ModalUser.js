@@ -4,11 +4,11 @@ import FormContainer from '../../components/FormContainer';
 import { Form, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-//import { useDispatch, useSelector } from 'react-redux';
+
 
 
 import { useRegisterMutation } from '../../slices/usersApiSlice';
-//import { setCredentials } from '../../slices/authSlice';
+
 
 
 
@@ -26,7 +26,7 @@ const ModalUser=({modalOpen, parentToggle, handleReRenderPage})=> {
     const navigate = useNavigate();
     const [register] = useRegisterMutation();
 
-    //const { userInfo } = useSelector((state) => state.auth);
+   
     
 
     const toggle = () => {parentToggle()};
@@ -39,8 +39,8 @@ const ModalUser=({modalOpen, parentToggle, handleReRenderPage})=> {
           } else {
             try {
               const res = await register({ firstName, lastName, email, password, address }).unwrap();
-              //dispatch(setCredentials({ ...res }));
-              navigate('/user-manage');
+              
+              navigate('/system/user-manage');
             } catch (err) {
               toast.error(err?.data?.message || err.error);
             }

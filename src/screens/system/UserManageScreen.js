@@ -11,6 +11,7 @@ import ModalEditUser from './ModalEditUser';
 
 import { useDeleteUserMutation } from '../../slices/usersApiSlice';
 import Header from '../../components/Header';
+import { Buffer } from 'buffer';
 
 const UserManageScreen = () => {
     const [getAlluser] = useGetAlluserMutation();
@@ -42,9 +43,11 @@ const UserManageScreen = () => {
             const res = await getAlluser().unwrap();
 
 
+
             if (res) {
                 setUserList(res.allUserslist);
             }
+
 
 
 
@@ -66,13 +69,18 @@ const UserManageScreen = () => {
     }
 
 
-    useEffect(() => {
+    useEffect(async() => {
 
 
 
 
-        console.log('Call API');
-        getData();
+        
+        const fetchData = async () => {
+            await getData();
+        };
+    
+        fetchData();
+        
     }, [userIsCreated])
 
     const handleAddnewUser = () => {
@@ -91,8 +99,25 @@ const UserManageScreen = () => {
     const handleEditUser = (user) => {
 
         console.log('user in manage page ', user);
-        setEditUser(user);
-        setEditModal(true)
+        let img = user.image;
+        let image64 = '';
+        let newUser = {};
+
+        if (img) {
+
+            image64 = new Buffer(img, 'base64').toString('binary');
+            newUser = { ...user, image: image64 };
+            setEditUser(newUser);
+
+            setEditModal(true);
+            
+        } else {
+            setEditUser(user);
+            setEditModal(true)
+
+        }
+
+
 
     }
 

@@ -65,6 +65,22 @@ export const userApiSlice = apiSlice.injectEndpoints({
       }),
     }),
 
+    registerWImage: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/create-user-wimage`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
+
+    getDoctors: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/top-doctor-home`,
+        method: 'GET',
+        body: data,
+      }),
+    }),
+
   }),
 });
 
@@ -77,4 +93,6 @@ export const {
   useDeleteUserMutation,
   useEditUserMutation,
   useGetAllCodesMutation,
+  useRegisterWImageMutation,
+  useGetDoctorsMutation,
 } = userApiSlice;
