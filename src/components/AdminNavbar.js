@@ -36,8 +36,8 @@ const AdminNavbar = () => {
         navigate('/system/user-redux');
     }
 
-    const handleOption3 = () => {
-        alert('Option3');
+    const handleManageDoctor = () => {
+        navigate('/system/manage-doctor');
     }
     const handleOption4 = () => {
         alert('Option4');
@@ -78,7 +78,7 @@ const AdminNavbar = () => {
                                     CRUD Redux
                                 </NavDropdown.Item>
 
-                                <NavDropdown.Item onClick={handleOption3}>
+                                <NavDropdown.Item onClick={handleManageDoctor}>
                                     Manage Doctor
                                 </NavDropdown.Item>
                                 <NavDropdown.Item onClick={handleOption4}>
@@ -96,7 +96,7 @@ const AdminNavbar = () => {
                                     {userInfo ? (<>
                                         <NavDropdown title="Phong Kham" id='username'>
 
-                                            <NavDropdown.Item onClick={handleOption3} active>
+                                            <NavDropdown.Item onClick={handleOption4} active>
                                                 Quang Ly Phong kham
                                             </NavDropdown.Item>
 
@@ -122,7 +122,7 @@ const AdminNavbar = () => {
                                     {userInfo ? (<>
                                         <NavDropdown title="Chuyen Khoa" id='username'>
 
-                                            <NavDropdown.Item onClick={handleOption3}>
+                                            <NavDropdown.Item onClick={handleOption4}>
                                                 Quang ly chyen khoa
                                             </NavDropdown.Item>
 
@@ -149,7 +149,7 @@ const AdminNavbar = () => {
                                     {userInfo ? (<>
                                         <NavDropdown title="Cam nang" id='username'>
 
-                                            <NavDropdown.Item onClick={handleOption3}>
+                                            <NavDropdown.Item onClick={handleOption4}>
                                                 Quang ly cam nang
                                             </NavDropdown.Item>
 

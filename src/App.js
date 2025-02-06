@@ -16,6 +16,8 @@ import PrivateRoute from './components/PrivateRoute.js';
 import HomePage from './screens/HomePage/HomePage';
 import UserManageScreen from './screens/system/UserManageScreen';
 import UserManageRedux from './screens/system/admin/UserManageRedux';
+import ManageDoctor from './screens/system/admin/ManageDoctor';
+
 
 
 
@@ -35,6 +37,7 @@ function App() {
             <Route path="/register" element={<RegisterScreen />} />
             <Route path="/system/user-manage" element={<UserManageScreen />} />
             <Route path="/system/user-redux" element={<UserManageRedux />} />
+            <Route path="/system/manage-doctor" element={<ManageDoctor />} />
             
             
 
