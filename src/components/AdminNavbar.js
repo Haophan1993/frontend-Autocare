@@ -7,6 +7,7 @@ import { useLogoutMutation } from '../slices/usersApiSlice';
 import { logout } from '../slices/authSlice';
 
 import { setLanguage } from '../slices/languageSlice';
+import './Header.scss';
 
 
 const AdminNavbar = () => {
@@ -50,21 +51,8 @@ const AdminNavbar = () => {
 
         <>
 
-            <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
+            <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect className="custom-navbar-height">
                 <Container>
-
-
-
-
-
-
-
-
-
-
-
-
-
                     <Navbar.Collapse id='basic-navbar-nav'>
                         <Nav className='ms-left'>
 
