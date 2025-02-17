@@ -17,12 +17,13 @@ import { useDispatch, useSelector } from 'react-redux';
 //import { setLanguage } from '../../store/languageSlice';
 
 import { setLanguage } from '../../slices/languageSlice'
+import { useNavigate } from 'react-router-dom';
 
 
-const HomeHeader= ()=> {
+const HomeHeader= (props)=> {
     const t = useTranslation();
     const dispatch = useDispatch();
-    
+    const navigate = useNavigate();
     const currentLanguage = useSelector((state) => state.language.currentLanguage);
 
     
@@ -36,7 +37,7 @@ const HomeHeader= ()=> {
 
                     </div>
 
-                    <div className='logo-container'>
+                    <div className='logo-container' onClick={() => { navigate('/home') }}>
                         <img className='logo-icon' src={logoIcon} alt='logo-icon'></img>
                     </div>
                 </div>
@@ -76,7 +77,7 @@ const HomeHeader= ()=> {
 
             </div>
 
-            
+            {props.isShowBanner===true&&
             <div className='home-header-down'>
                 <div className='home-header-picture-container'>
                     <div className='above-options-container'>
@@ -134,7 +135,7 @@ const HomeHeader= ()=> {
                 </div>
 
 
-            </div>
+            </div>}
             
 
 

@@ -14,3 +14,27 @@ body {
   height: 600px;
   padding: 10px;
 }
+
+.manage-doctor-container{
+  margin: 20px;
+  
+  .manage-doctor-title{
+    text-align: center;
+    font-weight: 600;
+    font-size: 20px;
+  }
+  .more-infor{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    .content-right{
+      width: 700px;
+      
+    }
+    .content-left{
+      width: 400px;
+    }
+  }
+
+}

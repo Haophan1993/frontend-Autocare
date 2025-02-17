@@ -7,7 +7,7 @@ import chay from './images/chay.JPG';
 import { useNavigate } from 'react-router-dom';
 import { Buffer } from 'buffer';
 
-import { useGetDoctorsMutation } from '../../slices/usersApiSlice'
+import { useGetDoctorsMutation } from '../../slices/doctorApiSlice';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setLanguage } from '../../slices/languageSlice';
@@ -17,7 +17,7 @@ import useTranslation from '../../hooks/useTranslation.js';
 const OutstandingDoctor = ({ settings }) => {
 
     const t = useTranslation();
-    const dispatch = useDispatch();
+    //const dispatch = useDispatch();
     const navigate = useNavigate();
     const currentLanguage = useSelector((state) => state.language.currentLanguage);
 
@@ -25,14 +25,14 @@ const OutstandingDoctor = ({ settings }) => {
     const [doctorListArr, setDoctorListArr] = useState();
     const [reload, setReload] =useState('');
 
-    const getBase64=(file)=>{
-        return new Promise((resolve, reject)=>{
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = ()=>resolve(reader.result);
-            reader.onerror = error => reject(error);
-        })
-    }
+    // const getBase64=(file)=>{
+    //     return new Promise((resolve, reject)=>{
+    //         const reader = new FileReader();
+    //         reader.readAsDataURL(file);
+    //         reader.onload = ()=>resolve(reader.result);
+    //         reader.onerror = error => reject(error);
+    //     })
+    // }
 
 
 
@@ -55,6 +55,12 @@ const OutstandingDoctor = ({ settings }) => {
 
     }, [reload]);
 
+    const handleDetailDoctor=(doctorInfor)=>{
+        console.log('Doctor Infor at OutStanding Doctor page : ', doctorInfor);
+        navigate(`/get-doctor-detail/${doctorInfor._id}`);
+
+    }
+
     return (
 
         <div className="outstanding-doctor-section">
@@ -74,7 +80,7 @@ const OutstandingDoctor = ({ settings }) => {
 
                             doctorListArr.map((item, index) => {
                                 let name='';
-                                if(currentLanguage=='vn'){
+                                if(currentLanguage==='vn'){
                                     name= `${item.positionDetails.value_vn} ${item.roleDetails.value_vn}`;
 
                                 }else{
@@ -104,7 +110,7 @@ const OutstandingDoctor = ({ settings }) => {
 
                                             </div>
 
-                                            <a className='doctor-name' onClick={() => { navigate('/') }}>{item.firstName + ' '+ item.lastName}</a>
+                                            <a className='doctor-name' onClick={()=>handleDetailDoctor(item)}>{item.firstName + ' '+ item.lastName}</a>
                                             <p>{name}</p>
                                         </div>
                                     

@@ -10,7 +10,7 @@ import { setLanguage } from '../slices/languageSlice';
 import './Header.scss';
 
 
-const AdminNavbar = () => {
+const DoctorNavbar = () => {
     const { userInfo } = useSelector((state) => state.auth);
     const currentLanguage = useSelector((state) => state.language.currentLanguage);
 
@@ -30,12 +30,7 @@ const AdminNavbar = () => {
         }
     };
 
-    const handleCRUDUser = () => {
-        navigate('/system/user-manage');
-    }
-    const handleCRUDRedux = () => {
-        navigate('/system/user-redux');
-    }
+    
 
     const handleManageDoctor = () => {
         navigate('/system/manage-doctor');
@@ -59,104 +54,19 @@ const AdminNavbar = () => {
 
                             <NavDropdown title="System" id='username'>
 
-                                <NavDropdown.Item onClick={handleCRUDUser}>
-                                    CRUD User
-                                </NavDropdown.Item>
-                                <NavDropdown.Item onClick={handleCRUDRedux}>
-                                    CRUD Redux
-                                </NavDropdown.Item>
+                              
 
                                 <NavDropdown.Item onClick={handleManageDoctor}>
                                     Manage Doctor
                                 </NavDropdown.Item>
-                                {/* <NavDropdown.Item onClick={handleOption4}>
-                                    Manage Admin
-                                </NavDropdown.Item> */}
+                                
 
                                 <NavDropdown.Item onClick={handleManageDoctorSchedule}>
                                     Manage Doctor Appointment
                                 </NavDropdown.Item>
                             </NavDropdown>
 
-                            <Navbar.Collapse id='basic-navbar-nav'>
-                                <Nav className='ms-left'>
-
-                                    {userInfo ? (<>
-                                        <NavDropdown title="Phong Kham" id='username'>
-
-                                            <NavDropdown.Item  active>
-                                                Quang Ly Phong kham
-                                            </NavDropdown.Item>
-
-                                        </NavDropdown>
-
-
-                                    </>) : (<>
-
-                                    </>
-                                    )}
-
-
-
-
-
-
-
-                                </Nav>
-                            </Navbar.Collapse>
-                            <Navbar.Collapse id='basic-navbar-nav'>
-                                <Nav className='ms-left'>
-
-                                    {userInfo ? (<>
-                                        <NavDropdown title="Chuyen Khoa" id='username'>
-
-                                            <NavDropdown.Item >
-                                                Quang ly chyen khoa
-                                            </NavDropdown.Item>
-
-                                        </NavDropdown>
-
-
-                                    </>) : (<>
-
-                                    </>
-                                    )}
-
-
-
-
-
-
-
-                                </Nav>
-                            </Navbar.Collapse>
-
-                            <Navbar.Collapse id='basic-navbar-nav'>
-                                <Nav className='ms-left'>
-
-                                    {userInfo ? (<>
-                                        <NavDropdown title="Cam nang" id='username'>
-
-                                            <NavDropdown.Item >
-                                                Quang ly cam nang
-                                            </NavDropdown.Item>
-
-                                        </NavDropdown>
-
-
-                                    </>) : (<>
-
-                                    </>
-                                    )}
-
-
-
-
-
-
-
-                                </Nav>
-                            </Navbar.Collapse>
+                            
 
 
 
@@ -238,5 +148,5 @@ const AdminNavbar = () => {
 
 }
 
-export default AdminNavbar;
+export default DoctorNavbar;
 

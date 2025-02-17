@@ -17,6 +17,8 @@ import HomePage from './screens/HomePage/HomePage';
 import UserManageScreen from './screens/system/UserManageScreen';
 import UserManageRedux from './screens/system/admin/UserManageRedux';
 import ManageDoctor from './screens/system/admin/ManageDoctor';
+import DoctorDetail from './screens/system/admin/DoctorDetail';
+import ManageDoctorSchedule from './screens/system/admin/ManageDoctorSchedule';
 
 
 
@@ -35,15 +37,19 @@ function App() {
             <Route index={true} path="/" element={<HomeScreen />} />
             <Route path="/login" element={<LoginScreen />} />
             <Route path="/register" element={<RegisterScreen />} />
-            <Route path="/system/user-manage" element={<UserManageScreen />} />
-            <Route path="/system/user-redux" element={<UserManageRedux />} />
-            <Route path="/system/manage-doctor" element={<ManageDoctor />} />
-            
-            
+
+
+
 
             <Route path='' element={<PrivateRoute />}>
               <Route path='/profile' element={<ProfileScreen />} />
               <Route path="/home" element={<HomePage />} />
+              <Route path="/system/user-manage" element={<UserManageScreen />} />
+              <Route path="/system/user-redux" element={<UserManageRedux />} />
+              <Route path="/system/manage-doctor" element={<ManageDoctor />} />
+              <Route path="/get-doctor-detail/:id" element={<DoctorDetail />} />
+              <Route path="/manage-doctor-schedule" element={<ManageDoctorSchedule />} />
+
             </Route>
 
 

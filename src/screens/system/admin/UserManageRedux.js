@@ -24,6 +24,8 @@ const UserManageRedux = () => {
     const [positionArr, setPositionArr] = useState([]);
     const [roleIDArr, setRoleIDArr] = useState([]);
 
+    
+
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -36,7 +38,7 @@ const UserManageRedux = () => {
     const [roleID, setRoleID] = useState('R2');
     const [image, setImage] = useState(null);
 
-
+    
 
 
     useEffect(() => {
@@ -53,7 +55,7 @@ const UserManageRedux = () => {
 
                 if (resGender) {
 
-                    console.log('data afer call API : ', resGender);
+                    //console.log('data afer call API : ', resGender);
                     setGenderArr(resGender);
 
                 }

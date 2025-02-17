@@ -73,13 +73,13 @@ export const userApiSlice = apiSlice.injectEndpoints({
       }),
     }),
 
-    getDoctors: builder.mutation({
-      query: (data) => ({
-        url: `${USERS_URL}/top-doctor-home`,
-        method: 'GET',
-        body: data,
-      }),
-    }),
+    // getDoctors: builder.mutation({
+    //   query: (data) => ({
+    //     url: `${USERS_URL}/top-doctor-home`,
+    //     method: 'GET',
+    //     body: data,
+    //   }),
+    // }),
 
   }),
 });
@@ -94,5 +94,5 @@ export const {
   useEditUserMutation,
   useGetAllCodesMutation,
   useRegisterWImageMutation,
-  useGetDoctorsMutation,
+  //useGetDoctorsMutation,
 } = userApiSlice;
