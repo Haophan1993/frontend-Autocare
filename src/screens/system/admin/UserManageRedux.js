@@ -5,9 +5,9 @@ import Header from '../../../components/Header';
 import { useEffect, useState } from 'react';
 import { useGetAllCodesMutation } from '../../../slices/usersApiSlice';
 import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
+//import { toast } from 'react-toastify';
 import { useRegisterWImageMutation } from '../../../slices/usersApiSlice';
-import { useRegisterMutation } from '../../../slices/usersApiSlice';
+//import { useRegisterMutation } from '../../../slices/usersApiSlice';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -17,7 +17,7 @@ const UserManageRedux = () => {
 
     const currentLanguage = useSelector((state) => state.language.currentLanguage);
     const [registerWimage] = useRegisterWImageMutation();
-    const [register] = useRegisterMutation();
+    //const [register] = useRegisterMutation();
     const navigate = useNavigate();
     const [getAllCodes] = useGetAllCodesMutation();
     const [genderArr, setGenderArr] = useState([]);
@@ -78,14 +78,14 @@ const UserManageRedux = () => {
 
     }, [email, firstName, lastName, image])
 
-    const getBase64 = (file) => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = error => reject(error);
-        })
-    }
+    // const getBase64 = (file) => {
+    //     return new Promise((resolve, reject) => {
+    //         const reader = new FileReader();
+    //         reader.readAsDataURL(file);
+    //         reader.onload = () => resolve(reader.result);
+    //         reader.onerror = error => reject(error);
+    //     })
+    // }
 
     const handleImageChange = async (e) => {
         const file = e.target.files[0];
@@ -134,7 +134,7 @@ const UserManageRedux = () => {
             e.preventDefault();
             try {
 
-                const res = await registerWimage({
+                 await registerWimage({
                     firstName, lastName, email, password, address,
                     phoneNumber, roleID, genderID, positionID, image
                 }).unwrap();
@@ -163,36 +163,36 @@ const UserManageRedux = () => {
                         <h1>User redux Manage</h1>
                     </div>
                     <div className='user-redux-body'>
-                        <div className='container'>
+                        
 
-                            <form>
-                                <div className="form-row">
-                                    <div className="form-group col-md-4">
+                            
+                                
+                                    <div className="input-group">
                                         <label >Email</label>
                                         <input type="email" className="form-control" id="inputEmail4" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
                                     </div>
-                                    <div className="form-group col-md-4">
+                                    <div className="input-group">
                                         <label >Password</label>
                                         <input type="password" className="form-control" id="inputPassword4" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
                                     </div>
 
-                                    <div className="form-group col-md-4">
+                                    <div className="input-group">
                                         <label>First Name</label>
                                         <input type="text" className="form-control" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                                     </div>
-                                    <div className="form-group col-md-4">
+                                    <div className="input-group">
                                         <label >Last Name</label>
                                         <input type="text" className="form-control" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value
                                         )} />
                                     </div>
 
-                                    <div className="form-group col-md-4">
+                                    <div className="input-group">
                                         <label >Phone Number</label>
                                         <input type="text" className="form-control" placeholder="Phone Number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
                                     </div>
-                                </div>
+                               
 
-                                <div className="form-group">
+                                <div className="input-group">
                                     <label >Address</label>
                                     <input type="text" className="form-control" id="inputAddress" placeholder="1234 Main St"
                                         value={address} onChange={(e) => setAddress(e.target.value)} />
@@ -200,7 +200,7 @@ const UserManageRedux = () => {
 
                                 <div className="form-row">
 
-                                    <div className="form-group col-md-4">
+                                    <div className="form-group col-md-3">
                                         <label >Gender</label>
                                         <select className="form-control" value={genderID} onChange={(e) => setGenderID(e.target.value)}>
 
@@ -219,7 +219,7 @@ const UserManageRedux = () => {
                                         </select>
                                     </div>
 
-                                    <div className="form-group col-md-4">
+                                    <div className="form-group col-md-3">
                                         <label >Position</label>
                                         <select className="form-control"
                                             value={positionID} onChange={(e) => setPositionID(e.target.value)}>
@@ -234,7 +234,7 @@ const UserManageRedux = () => {
                                         </select>
                                     </div>
 
-                                    <div className="form-group col-md-4">
+                                    <div className="form-group col-md-3">
                                         <label >RoleID</label>
                                         <select className="form-control" value={roleID} onChange={(e) => setRoleID(e.target.value)}>
                                             {roleIDArr.allcode && roleIDArr.allcode.length > 0 && roleIDArr.allcode.map((item, index) => {
@@ -269,10 +269,10 @@ const UserManageRedux = () => {
                                 </div>
 
                                 <button className="btn btn-primary my-3" onClick={handleSaveUser}>Save</button>
-                            </form>
+                            
 
 
-                        </div>
+                        
 
                     </div>
 

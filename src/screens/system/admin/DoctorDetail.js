@@ -42,9 +42,9 @@ const DoctorDetail = () => {
 
             fetch(`http://localhost:8000/api/doctor/get-doctor-detail-by-id?id=${id}`).then(res => { return res.json() })
                 .then(resData => {
-
-                    //console.log(data.doctor[0]);
-                    setData(resData.doctor[0]);
+                    //console.log('respone full ', resData.doctorInfo);
+                    //console.log(resData.doctorInfo[0]);
+                    setData(resData.doctorInfo[0]);
                     //console.log('Data: ', data);
 
 
@@ -91,10 +91,10 @@ const DoctorDetail = () => {
                     .then(res => { return res.json() })
                     .then(resData => {
 
-                        console.log(resData);
+                        //console.log('Respone Data: ', resData);
                         existingTime = resData.existingTime;
-                        console.log('existing Time of the doctor ', existingTime);
-                        console.log('All schedule Time: ', allScheduleTime);
+                        //console.log('existing Time of the doctor ', existingTime);
+                        //console.log('All schedule Time: ', allScheduleTime);
 
                         // const currentSchedule = allScheduleTime.map((item, index)=>{
 
@@ -272,25 +272,31 @@ const DoctorDetail = () => {
                                 dateFormat="yyyy-MM-dd"
                                 className="border p-2 rounded w-full"
                             />
-                            
-                                <label className='display-selected-date'>{selectedDate ? selectedDate.toDateString() : ''}</label>
 
-                            
+                            <label className='display-selected-date'>{selectedDate ? selectedDate.toDateString() : ''}</label>
+
+
 
 
 
                         </div>
                         <div className='select_time-container'>
-                            {allScheduleTime && allScheduleTime.length > 0 && allScheduleTime.map((item, index) => {
-
-
-                                return (
-
-
-                                    <button className={item.isSelected === true ? "time-button selected" : "time-button"} key={item._id} onClick={() => handleOnclickTime(item)}>{item.value_vn}</button>
-
-                                )
-                            })}
+                            
+                            <div className='select-time-container-left'>
+                            {allScheduleTime && allScheduleTime.length > 0 ? (
+                                <div>
+                                    {allScheduleTime.map((item, index) => {
+                                        return(<button
+                                            className={item.isSelected === true ? "time-button selected" : "time-button"} key={item._id} onClick={() => handleOnclickTime(item)}>{item.value_vn}
+                                        </button>)
+                                    })}
+                                </div>
+                            ) : (
+                                <div>No availabe appointment for this date</div>
+                            )}
+                            </div>
+                            <div className='select-time-container-right'></div>
+                            
                         </div>
                         <button className='btn btn-primary' onClick={handleSave}>Book Appointment</button>
 

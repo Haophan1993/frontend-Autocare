@@ -35,6 +35,53 @@ body {
     .content-left{
       width: 400px;
     }
+    
+  }
+  .detail-doctor-container{
+    //border: 1px red solid;
+    height: 200px;
+    
+    .detail-doctor-up{
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      .select-price-container{
+        width: 400px;
+      }
+      .select-payment-container{
+        width: 400px;
+      }
+      .select-province-container{
+        width: 400px;
+      }
+
+    }
+
+    .detail-doctor-down{
+      display: flex;
+      justify-content: space-between;
+      input{
+        height: 40px;
+        width: 400px;
+      }
+      .clinic-name{
+        
+        display: flex;
+        flex-direction: column;
+      }
+      .clinic-address{
+        
+        display: flex;
+        flex-direction: column;
+      }
+
+      .note{
+        
+        display: flex;
+        flex-direction: column;
+      }
+
+    }
   }
 
 }

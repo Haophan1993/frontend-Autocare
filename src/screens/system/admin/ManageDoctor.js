@@ -19,13 +19,17 @@ import MarkdownIt from 'markdown-it';
 
 import Select from 'react-select';
 import { useGetDoctorsMutation } from '../../../slices/doctorApiSlice';
+import { useGetAllCodesMutation } from '../../../slices/usersApiSlice';
 
 
 
 
 
 
-let Doctor=[]
+let doctor = [];
+let price=[];
+let paymentMethod=[];
+let province=[];
 
 
 
@@ -36,84 +40,106 @@ let Doctor=[]
 
 const ManageDoctor = () => {
 
-    
+    const [getAllCodes] = useGetAllCodesMutation();
     const mdParser = new MarkdownIt();
     const navigate = useNavigate();
     const [getDoctors] = useGetDoctorsMutation();
     const [content, setContent] = useState('');
-    const [contentHTML, setContentHTML]= useState('');
-    const [selectedDoctor, setselectedDoctor]= useState('');
-    const [description, setDescription]= useState('');
+    const [contentHTML, setContentHTML] = useState('');
+    const [selectedDoctor, setselectedDoctor] = useState('');
+    const [description, setDescription] = useState('');
+    const [selectedPrice, setSelectedPrice]=useState('');
+    const [selectedPayment, setSelectedPayment]=useState('');
+    const [selectedProvince, setSelectedProvince]=useState('');
+    const [clinicName, setClinicName]=useState('');
+    const [clinicAddress, setClinicAddress]=useState('');
+    const [note, setNote]=useState('');
+
     const editorRef = useRef(null);
     const [doctorListArr, setDoctorListArr] = useState();
+    const [priceListArr, setPriceListArr] = useState();
+    const [paymentListArr, setPaymentListArr] = useState();
+    const [provinceListArr, setProvinceListArr] = useState();
 
     const [saveDoctorInfor] = useSaveDoctorInforMutation();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // axios.get('http://localhost:5000/content')
-        //   .then(response => {
-        //     if (response.data) {
-        //       setContent(response.data.content);
-        //     }
-        //   })
-        //   .catch(error => console.error('Error fetching markdown:', error));
         
-        const fetchData =  async ()=> {
 
-            try{
+        const fetchData = async () => {
+
+            try {
                 const response = await getDoctors().unwrap();
-            
-            
+                const resPrice = await getAllCodes({ type: 'PRICE' }).unwrap();
+                const resPaymentMethod = await getAllCodes({ type: 'PAYMENT' }).unwrap();
+                const resProvince = await getAllCodes({ type: 'PROVINCE' }).unwrap();
 
-            setDoctorListArr(response.doctorList);
-            }catch(e){
-                console.error("Error fetching data:", e);
-            }finally {
                 
+                
+
+
+
+                setDoctorListArr(response.doctorList);
+                setPriceListArr(resPrice.allcode);
+                setPaymentListArr(resPaymentMethod.allcode);
+                setProvinceListArr(resProvince.allcode);
+            } catch (e) {
+                console.error("Error fetching data:", e);
+            } finally {
+
                 setLoading(false);
-      }
-            
-            
-            
+            }
+
+
+
 
         }
         fetchData();
-        
-        
-        
-        
+
+
+
+
     }, []);
 
-      const handleSave = async () => {
-       console.log(selectedDoctor.value, description, content, contentHTML);
-       
+    const handleSave = async () => {
+        console.log(selectedDoctor.value, description, content, contentHTML, 
+            selectedPrice.value, selectedPayment.value, selectedProvince.value, clinicName, clinicAddress, note);
 
-       
+
+
         try {
 
-          const res= await saveDoctorInfor({
-            id:selectedDoctor.value, 
-            description: description,
-            content: content,
-            contentHTML: contentHTML });
+            const res = await saveDoctorInfor({
+                id: selectedDoctor.value,
+                description: description,
+                content: content,
+                contentHTML: contentHTML,
+                price: selectedPrice.value,
+                payment:selectedPayment.value,
+                province:selectedProvince.value,
+                clinicName: clinicName,
+                clinicAddress: clinicAddress,
+                clinicNote: note,
+            });
 
-            
-            
-            if(res.data.message==="Markdown saved successfully!"){
+
+
+            if (res.data.message === "Markdown saved successfully!") {
 
                 setselectedDoctor('');
                 setContent('');
                 setContentHTML('')
                 setDescription('');
+                
 
             }
         } catch (error) {
-          console.error('Error saving markdown:', error);
+            console.error('Error saving markdown:', error);
         }
-      };
+    };
 
-    
+
 
     const handleImageUpload = async () => {
         const input = document.createElement('input');
@@ -193,63 +219,108 @@ const ManageDoctor = () => {
 
 
 
-    const handleSelectDoctorChange = async (selectedDoctor)=>{
+    const handleSelectDoctorChange = async (selectedDoctor) => {
         setselectedDoctor(selectedDoctor);
-        
-        fetch(`http://localhost:8000/api/doctor/get-doctor-detail-by-id?id=${selectedDoctor.value}`).then(res=>{return res.json()})
-        .then(data=>{
-            
-            console.log(data.doctor[0].markdowns[0]);
 
-            if(!data.doctor[0].markdowns[0]){
-                setDescription('');
-                setContent('');
+        fetch(`http://localhost:8000/api/doctor/get-doctor-detail-by-id?id=${selectedDoctor.value}`).then(res => { return res.json() })
+            .then(data => {
 
-            }else{
-            if(data.doctor[0].markdowns[0].description){
-                setDescription(data.doctor[0].markdowns[0].description);
-            }else{
-                setDescription('');
-            }
+                // console.log('Data from API: ', data);
 
-            if(data.doctor[0].markdowns[0].content){
-                setContent(data.doctor[0].markdowns[0].content);
+                // console.log(data.doctorInfo[0].markdowns[0]);
 
-            }else{
-                setContent('');
-            }
+                if (!data.doctorInfo[0].markdowns[0]) {
+                    setDescription('');
+                    setContent('');
 
-            }
+                } else {
+                    if (data.doctorInfo[0].markdowns[0].description) {
+                        setDescription(data.doctorInfo[0].markdowns[0].description);
+                    } else {
+                        setDescription('');
+                    }
 
-            
-            
-            
+                    if (data.doctorInfo[0].markdowns[0].content) {
+                        setContent(data.doctorInfo[0].markdowns[0].content);
 
-        });
-        
-        
-        
+                    } else {
+                        setContent('');
+                    }
+
+                }
+
+
+
+
+
+            });
+
+
+
+    }
+    const handleSelectedPriceChange=(selectedPrice)=>{
+        setSelectedPrice(selectedPrice);
+
     }
 
-    const handleDescriptionChange = (e)=>{
-            setDescription(e.target.value);
-            
+    const handleSelectedPaymentChange=(selectedPayment)=>{
+        setSelectedPayment(selectedPayment);
+    }
+
+    const handleSelectedProvinceChange=(selectedProvince)=>{
+        setSelectedProvince(selectedProvince);
+    }
+
+    const handleDescriptionChange = (e) => {
+        setDescription(e.target.value);
+
+    }
+
+    const handleClinicNameChange=(e)=>{
+        setClinicName(e.target.value);
+    }
+    const handleClinicAddressChange=(e)=>{
+        setClinicAddress(e.target.value);
+    }
+    const handleNoteChange=(e)=>{
+        setNote(e.target.value);
     }
 
 
-    if(loading){
-        return(
+    if (loading) {
+        return (
             <div>Loading...</div>
         )
-    }else{
-        if(doctorListArr){
-            Doctor = doctorListArr.map(doctor => ({
-                value: doctor._id, 
+    } else {
+        if (doctorListArr) {
+            doctor = doctorListArr.map(doctor => ({
+                value: doctor._id,
                 label: doctor.firstName,
-              }));
+            }));
         }
-        return (
+
+        if (priceListArr) {
+            price = priceListArr.map(item => ({
+                value: item.key,
+                label: item.value_en,
+            }));
+        }
+        if (paymentListArr) {
+            paymentMethod = paymentListArr.map(item => ({
+                value: item.key,
+                label: item.value_en,
+            }));
+        }
+
+        if (provinceListArr) {
+            province = provinceListArr.map(item => ({
+                value: item.key,
+                label: item.value_en,
+            }));
+        }
         
+        return (
+
 
             <>
                 <Header />
@@ -257,28 +328,89 @@ const ManageDoctor = () => {
                     <div className='manage-doctor-title'>Add new doctor information</div>
                     <div className='more-infor'>
                         <div className='content-left'>
-                            
+
                             <label>Select Doctor</label>
-                            <Select 
-                            value={selectedDoctor}
-                            onChange={handleSelectDoctorChange}
-                            
-    
-                            options={Doctor}
-                            placeholder="Select a doctor..."
-                            isSearchable={true}/>
+                            <Select
+                                value={selectedDoctor}
+                                onChange={handleSelectDoctorChange}
+
+
+                                options={doctor}
+                                placeholder="Select a doctor..."
+                                isSearchable={true} />
                         </div>
-    
+
                         <div className='content-right'>
-                        <label>Doctor Description</label>
-                            <textarea className='form-control' rows='4' 
-                            value={description}
-                            onChange={(e)=>handleDescriptionChange(e)}></textarea>
+                            <label>Doctor Description</label>
+                            <textarea className='form-control' rows='4'
+                                value={description}
+                                onChange={(e) => handleDescriptionChange(e)}></textarea>
                         </div>
-    
+
+
+
+                    </div>
+                    <div className='detail-doctor-container'>
+                        <div className='detail-doctor-up'>
+                            <div className='select-price-container'>
+                                <label>Select Price</label>
+                                <Select
+                                    value={selectedPrice}
+                                    onChange={handleSelectedPriceChange}
+
+
+                                    options={price}
+                                    placeholder="Select price..."
+                                    isSearchable={true} />
+
+                            </div>
+                            <div className='select-payment-container'>
+                                <label>Payment Method</label>
+                                <Select
+                                    value={selectedPayment}
+                                    onChange={handleSelectedPaymentChange}
+
+
+                                    options={paymentMethod}
+                                    placeholder="Select payment method..."
+                                    isSearchable={true} />
+
+                            </div>
+                            <div className='select-province-container'>
+                                <label>Province</label>
+                                <Select
+                                    value={selectedProvince}
+                                    onChange={handleSelectedProvinceChange}
+
+
+                                    options={province}
+                                    placeholder="Select province..."
+                                    isSearchable={true} />
+
+                            </div>
+
+                        </div>
+                        <div className='detail-doctor-down'>
+                            <div className='clinic-name'>
+                                <label>Clinic Name</label>
+                                <input type='text' placeholder='Enter clinic name' value={clinicName}
+                                onChange={(e)=>handleClinicNameChange(e)}></input>
+                            </div>
+                            <div className='clinic-address'>
+                                <label>Clinic Address</label>
+                                <input type='text' placeholder='Enter clinic Address' value={clinicAddress}
+                                onChange={(e)=>handleClinicAddressChange(e)}></input>
+                            </div>
+                            <div className='note'>
+                                <label>Note</label>
+                                <input type='text' value={note}
+                                onChange={(e)=>handleNoteChange(e)}></input>
+                            </div>
+                        </div>
+
                     </div>
                     <div className='manage-doctor-editor'>
-    
+
                         <h2>Markdown Editor</h2>
                         <div ref={editorRef}>
                             <MarkdownEditor
@@ -298,24 +430,24 @@ const ManageDoctor = () => {
                             />
                         </div>
                         <button onClick={handleSave}>Save Markdown</button>
-    
+
                         {/* <h2>Preview</h2>
                         <MarkdownPreview source={content} 
                          />*/}
-    
+
                     </div>
                 </div>
-    
-    
+
+
             </>
-    
+
         )
     }
 
 
 
 
-    
+
 }
 
 export default ManageDoctor

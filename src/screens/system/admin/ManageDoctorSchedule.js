@@ -158,7 +158,7 @@ const ManageDoctorSchedule = () => {
             toast.error('Invalid Time')
          }
          
-         const res={};
+         let res={};
          console.log('input Data: ', inputData); 
 
          try{

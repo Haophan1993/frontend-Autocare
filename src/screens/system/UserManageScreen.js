@@ -1,11 +1,11 @@
 import './UserManageScreen.scss';
 import { useGetAlluserMutation } from '../../slices/usersApiSlice';
 import { useState, useEffect } from 'react';
-import plusIcon from './images/plus-solid.svg';
+//import plusIcon from './images/plus-solid.svg';
 import { useNavigate } from 'react-router-dom';
-import { useLogoutMutation } from '../../slices/usersApiSlice';
-import { useDispatch } from 'react-redux';
-import { logout } from '../../slices/authSlice';
+// import { useLogoutMutation } from '../../slices/usersApiSlice';
+// import { useDispatch } from 'react-redux';
+//import { logout } from '../../slices/authSlice';
 import ModalUser from './ModalUser';
 import ModalEditUser from './ModalEditUser';
 
@@ -25,20 +25,12 @@ const UserManageScreen = () => {
     const [loading, setLoading] = useState(true);
 
 
-    const dispatch = useDispatch();
-    const [logoutApiCall] = useLogoutMutation();
+    // const dispatch = useDispatch();
+    // const [logoutApiCall] = useLogoutMutation();
 
     const [deleteApiCall] = useDeleteUserMutation();
 
-    const logoutHandler = async () => {
-        try {
-            await logoutApiCall().unwrap();
-            dispatch(logout());
-            navigate('/');
-        } catch (err) {
-            console.error(err);
-        }
-    };
+
 
     const getData = async () => {
         try {
@@ -59,9 +51,45 @@ const UserManageScreen = () => {
 
     };
 
+
+
+
+    useEffect(() => {
+
+
+
+
+
+        const fetchData = async () => {
+
+            try {
+                getData()
+            } catch (e) {
+                console.log(e);
+            } finally {
+
+                setLoading(false);
+            }
+
+        };
+
+        fetchData();
+
+    },[])
+
+    // const logoutHandler = async () => {
+    //     try {
+    //         await logoutApiCall().unwrap();
+    //         dispatch(logout());
+    //         navigate('/');
+    //     } catch (err) {
+    //         console.error(err);
+    //     }
+    // };
+
     const handleDelete = async (id) => {
         try {
-            const res = await deleteApiCall({ id }).unwrap();
+             await deleteApiCall({ id }).unwrap();
             setUserIsCreated(!userIsCreated);
 
 
@@ -70,33 +98,10 @@ const UserManageScreen = () => {
         }
     }
 
-
-    useEffect(async() => {
-
-
-
-
-        
-        const fetchData = async () => {
-
-            try{
-                await getData();
-            }catch(e){
-                console.log(e);
-            }finally {
-                
-                setLoading(false);
-        }
-            
-        };
-    
-        fetchData();
-        
-    }, [userIsCreated])
-
-    const handleAddnewUser = () => {
-        setOpenModal(true);
-    }
+    // const handleAddnewUser = () => {
+    //     setOpenModal(true);
+    //     getData();
+    // }
 
     const parentToggle = () => setOpenModal(!openModal);
 
@@ -121,40 +126,46 @@ const UserManageScreen = () => {
             setEditUser(newUser);
 
             setEditModal(true);
-            
+
         } else {
             setEditUser(user);
             setEditModal(true)
 
         }
 
-
+        getData();
 
     }
 
+
+    
     const userRoleId = useSelector((state) => state.auth.userInfo.roleID);
+    // console.log('Before Render User List: ', userList );
+    // console.log('Check state: ', userRoleId);
+    // console.log('Loading variable: ', loading);
 
-    console.log('Check state: ', userRoleId);
 
-    if(loading){
-        return(
+
+    if (loading) {
+        return (
             <div>Loading...</div>
         )
     }
-    else{
+    else {
 
-        if(userList.length>0)
-        {
-            if(userRoleId==='R1'){
+        if (userList.length > 0) {
+            
+            if (userRoleId === 'R1') {
+
                 return (
                     <>
                         <Header />
-            
+
                         <div className="users-container">
                             <div className="title text-center"><h1>Manage user</h1></div>
-                            <div className='mx-1'>
+                            {/* <div className='mx-1'>
                                 <button className='btn btn-primary px-3 mb-2' onClick={handleAddnewUser}><img className='plus-icon' src={plusIcon}></img>Add new user</button>
-                            </div>
+                            </div> */}
                             <div>
                                 <table id="customers">
                                     <tr>
@@ -164,13 +175,13 @@ const UserManageScreen = () => {
                                         <th>Address</th>
                                         <th>Action</th>
                                     </tr>
-            
+
                                     {
                                         userList.map((item, index) => {
-            
+
                                             return (
                                                 <>
-                                                    <tr key={index}>
+                                                    <tr key={index._id}>
                                                         <td>{item.firstName}</td>
                                                         <td>{item.lastName}</td>
                                                         <td>{item.email}</td>
@@ -183,89 +194,93 @@ const UserManageScreen = () => {
                                             )
                                         })
                                     }
-            
-            
-            
-            
+
+
+
+
                                 </table>
                             </div>
                             <>{openModal && <ModalUser modalOpen={openModal} parentToggle={parentToggle} handleReRenderPage={handleReRenderPage} />
                             }           </>
-            
+
                             <>
                                 {EditModal &&
                                     <ModalEditUser EditModal={EditModal} parentToggle={parentToggleEditModal} editUser={editUser} handleReRenderPage={handleReRenderPage} />
                                 }</>
                         </div>
                     </>
-            
+
                 )
 
             }
-            if(userRoleId==='R2'){
+            if (userRoleId === 'R2') {
                 navigate('/system/manage-doctor');
             }
-            
+
         }
 
     }
 
 
 
-    return (
-        <>
-            <Header />
+    // return (
+    //     <>
+    //         <Header />
 
-            <div className="users-container">
-                <div className="title text-center"><h1>Manage user</h1></div>
-                <div className='mx-1'>
-                    <button className='btn btn-primary px-3 mb-2' onClick={handleAddnewUser}><img className='plus-icon' src={plusIcon}></img>Add new user</button>
-                </div>
-                <div>
-                    <table id="customers">
-                        <tr>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Address</th>
-                            <th>Action</th>
-                        </tr>
+    //         <div className="users-container">
+    //             <div className="title text-center"><h1>Manage user</h1></div>
+    //             <div className='mx-1'>
+    //                 <button className='btn btn-primary px-3 mb-2' 
+    //                 onClick={handleAddnewUser}><img 
+    //                 className='plus-icon' 
+    //                 src={plusIcon}></img>Add new user</button>
+    //             </div>
 
-                        {
-                            userList.map((item, index) => {
+    //             <div>
+    //                 <table id="customers">
+    //                     <tr>
+    //                         <th>First Name</th>
+    //                         <th>Last Name</th>
+    //                         <th>Email</th>
+    //                         <th>Address</th>
+    //                         <th>Action</th>
+    //                     </tr>
 
-                                return (
-                                    <>
-                                        <tr key={index}>
-                                            <td>{item.firstName}</td>
-                                            <td>{item.lastName}</td>
-                                            <td>{item.email}</td>
-                                            <td>{item.address}</td>
-                                            <td><button className='btn btn-primary px-3 mx-3' onClick={() => handleEditUser(item)}>Edit</button>
-                                                <button className='btn btn-primary px-3' onClick={() => handleDelete(item._id)}>Delete</button>
-                                            </td>
-                                        </tr>
-                                    </>
-                                )
-                            })
-                        }
+    //                     {
+    //                         userList.map((item, index) => {
+
+    //                             return (
+    //                                 <>
+    //                                     <tr key={item._id}>
+    //                                         <td>{item.firstName}</td>
+    //                                         <td>{item.lastName}</td>
+    //                                         <td>{item.email}</td>
+    //                                         <td>{item.address}</td>
+    //                                         <td><button className='btn btn-primary px-3 mx-3' onClick={() => handleEditUser(item)}>Edit</button>
+    //                                             <button className='btn btn-primary px-3' onClick={() => handleDelete(item._id)}>Delete</button>
+    //                                         </td>
+    //                                     </tr>
+    //                                 </>
+    //                             )
+    //                         })
+    //                     }
 
 
 
 
-                    </table>
-                </div>
-                <>{openModal && <ModalUser modalOpen={openModal} parentToggle={parentToggle} handleReRenderPage={handleReRenderPage} />
-                }           </>
+    //                 </table>
+    //             </div>
+    //             <>{openModal && <ModalUser modalOpen={openModal} parentToggle={parentToggle} handleReRenderPage={handleReRenderPage} />
+    //             }           </>
 
-                <>
-                    {EditModal &&
-                        <ModalEditUser EditModal={EditModal} parentToggle={parentToggleEditModal} editUser={editUser} handleReRenderPage={handleReRenderPage} />
-                    }</>
-            </div>
-        </>
+    //             <>
+    //                 {EditModal &&
+    //                     <ModalEditUser EditModal={EditModal} parentToggle={parentToggleEditModal} editUser={editUser} handleReRenderPage={handleReRenderPage} />
+    //                 }</>
+    //         </div>
+    //     </>
 
-    )
+    // )
 }
 
 export default UserManageScreen
