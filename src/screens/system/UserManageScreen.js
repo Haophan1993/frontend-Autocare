@@ -75,7 +75,7 @@ const UserManageScreen = () => {
 
         fetchData();
 
-    },[])
+    },[userIsCreated])
 
     // const logoutHandler = async () => {
     //     try {

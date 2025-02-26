@@ -131,7 +131,7 @@ const ManageDoctor = () => {
                 setContent('');
                 setContentHTML('')
                 setDescription('');
-                
+
 
             }
         } catch (error) {
@@ -221,32 +221,54 @@ const ManageDoctor = () => {
 
     const handleSelectDoctorChange = async (selectedDoctor) => {
         setselectedDoctor(selectedDoctor);
+        setSelectedPrice('');
+        setSelectedPayment('');
+        setSelectedProvince('');
 
         fetch(`http://localhost:8000/api/doctor/get-doctor-detail-by-id?id=${selectedDoctor.value}`).then(res => { return res.json() })
             .then(data => {
 
-                // console.log('Data from API: ', data);
+                 //console.log('Data from API: ', data);
 
                 // console.log(data.doctorInfo[0].markdowns[0]);
 
-                if (!data.doctorInfo[0].markdowns[0]) {
-                    setDescription('');
-                    setContent('');
+                // if (!data.doctorInfo[0].markdowns[0]) {
+                //     setDescription('');
+                //     setContent('');
 
-                } else {
-                    if (data.doctorInfo[0].markdowns[0].description) {
-                        setDescription(data.doctorInfo[0].markdowns[0].description);
-                    } else {
-                        setDescription('');
-                    }
+                // } else {
+                //     if (data.doctorInfo[0].markdowns[0].description) {
+                //         setDescription(data.doctorInfo[0].markdowns[0].description);
+                //     } else {
+                //         setDescription('');
+                //     }
 
-                    if (data.doctorInfo[0].markdowns[0].content) {
-                        setContent(data.doctorInfo[0].markdowns[0].content);
+                //     if (data.doctorInfo[0].markdowns[0].content) {
+                //         setContent(data.doctorInfo[0].markdowns[0].content);
 
-                    } else {
-                        setContent('');
-                    }
+                //     } else {
+                //         setContent('');
+                //     }
 
+                // }
+                if(data.doctorInfo[0].markdowns[0]){
+                    setDescription(data.doctorInfo[0].markdowns[0].description);
+                    setContent(data.doctorInfo[0].markdowns[0].content);
+
+                }
+                if(data.doctorInfo[0].additionalDoctorinfo[0]){
+                    setClinicName(data.doctorInfo[0].additionalDoctorinfo[0].clinicName);
+                    setClinicAddress(data.doctorInfo[0].additionalDoctorinfo[0].clinicAddress);
+                    setNote(data.doctorInfo[0].additionalDoctorinfo[0].note);
+                    
+                    const foundPrice = price.find(item=>item.value===data.doctorInfo[0].additionalDoctorinfo[0].priceID);
+                    const foundPayment = paymentMethod.find(item=>item.value===data.doctorInfo[0].additionalDoctorinfo[0].paymentID);
+                    const foundProvince = province.find(item=>item.value===data.doctorInfo[0].additionalDoctorinfo[0].provinceID);
+                    
+                    setSelectedPrice(foundPrice);
+                    setSelectedPayment(foundPayment);
+                    setSelectedProvince(foundProvince);
+                    
                 }
 
 
@@ -260,6 +282,7 @@ const ManageDoctor = () => {
     }
     const handleSelectedPriceChange=(selectedPrice)=>{
         setSelectedPrice(selectedPrice);
+        //console.log('selected Price on Change ', selectedPrice);
 
     }
 

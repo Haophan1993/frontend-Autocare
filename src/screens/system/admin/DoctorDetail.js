@@ -13,6 +13,11 @@ import { useGetAllCodesMutation } from '../../../slices/usersApiSlice';
 import { toast } from 'react-toastify';
 import { useCreateBulkScheduleMutation } from '../../../slices/doctorApiSlice';
 
+import DoctorDateTimeScheduleSection from './DoctorDateTimeScheduleSection';
+import ExtraDoctorInfor from './ExtraDoctorInfor';
+
+
+
 
 
 
@@ -26,15 +31,18 @@ const DoctorDetail = () => {
     const [allScheduleTime, setAllScheduleTime] = useState([]);
     const { id } = useParams();
     const [data, setData] = useState('');
+    const [isShow, setIsShow] = useState(false);
     let image64;
     let doctorID = id;
 
     const NoChangeSchedule = useRef(null);
-    //console.log('check id at Doctor Detail page: ', doctorID);
+    console.log('check id at Doctor Detail page: ', doctorID);
     const [getAllCodes] = useGetAllCodesMutation();
 
     //const [getScheduleDetails] = useGetScheduleDetailByDoctorIDMutation();
     const [createBulkAppoinment] = useCreateBulkScheduleMutation();
+
+    
 
     useEffect(() => {
 
@@ -45,7 +53,7 @@ const DoctorDetail = () => {
                     //console.log('respone full ', resData.doctorInfo);
                     //console.log(resData.doctorInfo[0]);
                     setData(resData.doctorInfo[0]);
-                    //console.log('Data: ', data);
+                    console.log('Data: ', data);
 
 
 
@@ -73,6 +81,8 @@ const DoctorDetail = () => {
 
 
     }, [])
+
+    
 
     const handleSelectDateChange = async (selectedDate) => {
         setSelectedDate(selectedDate);
@@ -236,6 +246,11 @@ const DoctorDetail = () => {
     }
 
 
+    const handleShowPrice = () => {
+        setIsShow(!isShow);
+        console.log(isShow)
+    }
+
     if (data.image) {
         image64 = new Buffer(data.image, 'base64').toString('binary');
 
@@ -262,48 +277,30 @@ const DoctorDetail = () => {
                             <p>{data.markdowns[0].description}</p>
                         </div>
                     </div>
-                    <div className='schedule-doctor'>
-                        <div className='select_date-container'>
-                            <label className='select-date-label'>Select Date</label>
-                            <DatePicker
-                                selected={selectedDate}
-                                onChange={handleSelectDateChange}
-                                minDate={new Date()} // Prevents selecting past dates
-                                dateFormat="yyyy-MM-dd"
-                                className="border p-2 rounded w-full"
-                            />
 
-                            <label className='display-selected-date'>{selectedDate ? selectedDate.toDateString() : ''}</label>
-
-
-
-
+                    
+                    <div className='appointment-extraDoctorInfor'>
+                        <div className='left-content'>
+                        <DoctorDateTimeScheduleSection pdoctorID={doctorID} defaultSchedule={NoChangeSchedule.current} />
 
                         </div>
-                        <div className='select_time-container'>
-                            
-                            <div className='select-time-container-left'>
-                            {allScheduleTime && allScheduleTime.length > 0 ? (
-                                <div>
-                                    {allScheduleTime.map((item, index) => {
-                                        return(<button
-                                            className={item.isSelected === true ? "time-button selected" : "time-button"} key={item._id} onClick={() => handleOnclickTime(item)}>{item.value_vn}
-                                        </button>)
-                                    })}
-                                </div>
-                            ) : (
-                                <div>No availabe appointment for this date</div>
-                            )}
-                            </div>
-                            <div className='select-time-container-right'></div>
-                            
+
+                        <div className='right-content'>
+                        <ExtraDoctorInfor pdoctorID={doctorID}/>
                         </div>
-                        <button className='btn btn-primary' onClick={handleSave}>Book Appointment</button>
+                        
 
                     </div>
+
+
+
                     <div className='detail-infor'>
                         <ReactMarkdown>{data.markdowns[0].content}</ReactMarkdown>
                     </div>
+
+                    
+
+
                     <div className='comment'></div>
                 </div>
             </>

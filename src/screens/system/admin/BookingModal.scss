@@ -1,0 +1,41 @@
+.booking-container{
+    border: 1px solid green;
+    .doctor-infor{
+        border: 1px solid red;
+        height: 300px;
+        .dotor-detail{
+            display: flex;
+            height: 220px;
+            .content-left {
+                height: 200px;
+                flex: 20%;
+                //border: 1px black solid;
+                display: flex;
+                justify-content: center;
+                padding-top: 5px;
+          
+                .doctor-img {
+                  width: 100px;
+                  border-radius: 100px;
+                  height: 100px;
+                }
+              }
+          
+              .content-right {
+                height: 200px;
+                flex: 80%;
+                //border: 1px blue solid;
+              }
+
+        }
+        .appointment-info{
+
+        }
+
+        .doctor-price{
+
+        }
+
+
+    }
+}

@@ -1,0 +1,81 @@
+.schedule-doctor {
+   
+    //border: 1px solid black;
+    margin-bottom: 10px;
+    height: 300px;
+    
+
+    .left-content{
+        
+        .select_date-container {
+            display: flex;
+            gap: 20px;
+      
+            .select-date-label {
+              margin-right: 10px;
+            }
+      
+            .display-selected-date {
+              font-size: 30px;
+            }
+      
+          }
+      
+          .lable-available-appointment{
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-size: large;
+          }
+      
+          .select_time-container {
+      
+            display: flex;
+            
+            margin-top: 20px;
+            
+      
+            .select-time-container-left {
+              flex: 60%;
+              height: 170px;
+              display: flex;
+              
+                
+              
+              //border: 1px blue solid;
+              
+            .button-container{
+                margin: 5px;
+                //border: 1px solid green;
+                //width: 120px;
+            }
+              
+      
+              .time-button {
+                cursor: pointer;
+                border-radius: 10px;
+      
+      
+      
+      
+              }
+      
+              .selected {
+                background-color: blue;
+                /* Example: Change background when selected */
+                color: white;
+      
+              }
+      
+            }
+      
+          
+      
+      
+      
+          }
+
+    }
+    
+
+   
+  }
