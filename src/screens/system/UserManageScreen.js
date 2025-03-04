@@ -75,7 +75,7 @@ const UserManageScreen = () => {
 
         fetchData();
 
-    },[userIsCreated])
+    }, [userIsCreated])
 
     // const logoutHandler = async () => {
     //     try {
@@ -89,7 +89,7 @@ const UserManageScreen = () => {
 
     const handleDelete = async (id) => {
         try {
-             await deleteApiCall({ id }).unwrap();
+            await deleteApiCall({ id }).unwrap();
             setUserIsCreated(!userIsCreated);
 
 
@@ -138,7 +138,7 @@ const UserManageScreen = () => {
     }
 
 
-    
+
     const userRoleId = useSelector((state) => state.auth.userInfo.roleID);
     // console.log('Before Render User List: ', userList );
     // console.log('Check state: ', userRoleId);
@@ -154,7 +154,7 @@ const UserManageScreen = () => {
     else {
 
         if (userList.length > 0) {
-            
+
             if (userRoleId === 'R1') {
 
                 return (
@@ -168,6 +168,7 @@ const UserManageScreen = () => {
                             </div> */}
                             <div>
                                 <table id="customers">
+                                    <thead>
                                     <tr>
                                         <th>First Name</th>
                                         <th>Last Name</th>
@@ -175,25 +176,33 @@ const UserManageScreen = () => {
                                         <th>Address</th>
                                         <th>Action</th>
                                     </tr>
-
+                                    </thead>
+                                    <tbody>
                                     {
                                         userList.map((item, index) => {
 
+                                            
                                             return (
-                                                <>
-                                                    <tr key={index._id}>
-                                                        <td>{item.firstName}</td>
-                                                        <td>{item.lastName}</td>
-                                                        <td>{item.email}</td>
-                                                        <td>{item.address}</td>
-                                                        <td><button className='btn btn-primary px-3 mx-3' onClick={() => handleEditUser(item)}>Edit</button>
-                                                            <button className='btn btn-primary px-3' onClick={() => handleDelete(item._id)}>Delete</button>
-                                                        </td>
-                                                    </tr>
-                                                </>
+                                                
+                                                    <>
+
+                                                        <tr key={item._id}>
+                                                            <td>{item.firstName}</td>
+                                                            <td>{item.lastName}</td>
+                                                            <td>{item.email}</td>
+                                                            <td>{item.address}</td>
+                                                            <td><button className='btn btn-primary px-3 mx-3' onClick={() => handleEditUser(item)}>Edit</button>
+                                                                <button className='btn btn-primary px-3' onClick={() => handleDelete(item._id)}>Delete</button>
+                                                            </td>
+                                                        </tr>
+
+                                                    </>
+                                                
                                             )
+
                                         })
                                     }
+                                    </tbody>
 
 
 
@@ -223,64 +232,7 @@ const UserManageScreen = () => {
 
 
 
-    // return (
-    //     <>
-    //         <Header />
-
-    //         <div className="users-container">
-    //             <div className="title text-center"><h1>Manage user</h1></div>
-    //             <div className='mx-1'>
-    //                 <button className='btn btn-primary px-3 mb-2' 
-    //                 onClick={handleAddnewUser}><img 
-    //                 className='plus-icon' 
-    //                 src={plusIcon}></img>Add new user</button>
-    //             </div>
-
-    //             <div>
-    //                 <table id="customers">
-    //                     <tr>
-    //                         <th>First Name</th>
-    //                         <th>Last Name</th>
-    //                         <th>Email</th>
-    //                         <th>Address</th>
-    //                         <th>Action</th>
-    //                     </tr>
-
-    //                     {
-    //                         userList.map((item, index) => {
-
-    //                             return (
-    //                                 <>
-    //                                     <tr key={item._id}>
-    //                                         <td>{item.firstName}</td>
-    //                                         <td>{item.lastName}</td>
-    //                                         <td>{item.email}</td>
-    //                                         <td>{item.address}</td>
-    //                                         <td><button className='btn btn-primary px-3 mx-3' onClick={() => handleEditUser(item)}>Edit</button>
-    //                                             <button className='btn btn-primary px-3' onClick={() => handleDelete(item._id)}>Delete</button>
-    //                                         </td>
-    //                                     </tr>
-    //                                 </>
-    //                             )
-    //                         })
-    //                     }
-
-
-
-
-    //                 </table>
-    //             </div>
-    //             <>{openModal && <ModalUser modalOpen={openModal} parentToggle={parentToggle} handleReRenderPage={handleReRenderPage} />
-    //             }           </>
-
-    //             <>
-    //                 {EditModal &&
-    //                     <ModalEditUser EditModal={EditModal} parentToggle={parentToggleEditModal} editUser={editUser} handleReRenderPage={handleReRenderPage} />
-    //                 }</>
-    //         </div>
-    //     </>
-
-    // )
+    
 }
 
 export default UserManageScreen

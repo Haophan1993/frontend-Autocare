@@ -1,13 +1,14 @@
 .booking-container{
-    border: 1px solid green;
+    //border: 1px solid green;
+    
     .doctor-infor{
         border: 1px solid red;
-        height: 300px;
+        height: 200px;
         .dotor-detail{
             display: flex;
-            height: 220px;
+            height: 120px;
             .content-left {
-                height: 200px;
+                height: 100px;
                 flex: 20%;
                 //border: 1px black solid;
                 display: flex;
@@ -22,7 +23,7 @@
               }
           
               .content-right {
-                height: 200px;
+                height: 100px;
                 flex: 80%;
                 //border: 1px blue solid;
               }

@@ -38,7 +38,7 @@ const DoctorDateTimeScheduleSection = (props) => {
 
     const parentToggle = () => setOpenModal(!openModal);
 
-    const handleReRenderPage = () => setAppointmentIsCreated(!appointmentIsCreated);
+    const handleReRenderPage = () => handleSelectDateChange(selectedDate);
 
 
 
@@ -144,6 +144,7 @@ const DoctorDateTimeScheduleSection = (props) => {
         
         setOpenModal(true);
 
+
     }
 
 
@@ -208,9 +209,7 @@ const DoctorDateTimeScheduleSection = (props) => {
         } catch (e) {
             console.log(e)
         }
-        //  }finally{
-        //     console.log('response from server: ', res)
-        //  }
+       
     }
 
 
@@ -254,9 +253,9 @@ const DoctorDateTimeScheduleSection = (props) => {
                         <div className='select-time-container-left'>
                             {allScheduleTime.map((item, index) => {
                                 return (
-                                    <div className='button-container'>
+                                    <div key={item._id} className='button-container'>
                                         <button
-                                            className={item.isSelected === true ? "time-button selected" : "time-button"} key={item._id} onClick={() => handleOnclickTime(item)}>{item.value_vn}
+                                            className={item.isSelected === true ? "time-button selected" : "time-button"}  onClick={() => handleOnclickTime(item)}>{item.value_vn}
                                         </button></div>)
                             })}
                         </div>

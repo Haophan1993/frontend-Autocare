@@ -19,6 +19,7 @@ import UserManageRedux from './screens/system/admin/UserManageRedux';
 import ManageDoctor from './screens/system/admin/ManageDoctor';
 import DoctorDetail from './screens/system/admin/DoctorDetail';
 import ManageDoctorSchedule from './screens/system/admin/ManageDoctorSchedule';
+import ConfirmMail from './screens/system/admin/ConfirmMail';
 
 
 
@@ -49,6 +50,7 @@ function App() {
               <Route path="/system/manage-doctor" element={<ManageDoctor />} />
               <Route path="/get-doctor-detail/:id" element={<DoctorDetail />} />
               <Route path="/manage-doctor-schedule" element={<ManageDoctorSchedule />} />
+              <Route path="/confirm-email" element={<ConfirmMail />} />
 
             </Route>
 
